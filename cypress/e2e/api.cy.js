@@ -28,4 +28,18 @@ describe('Learn REST API Testing with Cypress', () => {
     cy.request({ url: '/users/non-exist', failOnStatusCode: false }).as('nonExistingUser')
     cy.get('@nonExistingUser').its('status').should('equal', 404)
   })
+
+  it.only('API Tests - GET Request', () => {
+    cy.request({url: '/users/2', method: 'GET'}).as('whateverUser')
+    cy.get('@whateverUser').then((res) => {
+      cy.log(JSON.stringify(res.body))
+      expect(res.body.data.id).equal(2)
+      expect(res.body.data.email).contain('janet.weaver@reqres.in')
+      expect(res.body.data.last_name).not.to.contain('SomeFunnyName')
+
+      const userID = res.body.data.id
+      expect(userID).to.equal(2)
+    })
+  })
+
 })
