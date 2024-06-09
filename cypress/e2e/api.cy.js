@@ -74,4 +74,18 @@ describe('Learn REST API Testing with Cypress', () => {
     cy.get('@deleteUser').its('status').should('equal', 204)
   })
 
+  it('API Tests - PUT Request', () => {
+    cy.request({
+      url:'/users/2',
+      method:'PUT',
+      body:{name:'name-update' },
+      //in case we don`t have access to the end point data we provide the authentication token
+      //auth:{bearer:'my-token-value'}
+    }).as('putRequest')
+    cy.get('@putRequest').its('status').should('equal', 200)
+    cy.get('@putRequest').then((res) => {
+      expect(res.body.name).to.equal('name-update')
+    })
+  })
+
 })
