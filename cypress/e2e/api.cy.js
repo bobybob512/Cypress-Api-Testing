@@ -69,4 +69,9 @@ describe('Learn REST API Testing with Cypress', () => {
     })
   })
 
+  it('API Tests - DELETE Request', () => {
+    cy.request({url:'/users/2', method: 'DELETE'}).as('deleteUser')
+    cy.get('@deleteUser').its('status').should('equal', 204)
+  })
+
 })
